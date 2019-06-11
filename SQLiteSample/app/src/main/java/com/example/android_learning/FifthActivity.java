@@ -3,6 +3,10 @@ package com.example.android_learning;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -10,15 +14,22 @@ import android.widget.TextView;
 
 public class FifthActivity extends AppCompatActivity {
     long id;
+    private Toolbar toolbar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fifth);
 
+        toolbar = (Toolbar) findViewById(R.id.toolBar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
         Bundle bundle = getIntent().getExtras();
         id = bundle.getLong("id");
-
+        Log.d("MMM", "onCreate: " + id);
 
         DatabaseModel dbModel = new FeedEntryDao().getDetailsById(id);
 
@@ -30,16 +41,10 @@ public class FifthActivity extends AppCompatActivity {
 
         EditText address = (EditText) findViewById(R.id.address);
 
-
-        TextView tv1 = findViewById(R.id.name);
-        TextView tv2 = (TextView) findViewById(R.id.number);
-        TextView tv3 = (TextView) findViewById(R.id.email);
-        TextView tv4 = (TextView) findViewById(R.id.address);
-
-        tv1.setText(dbModel.getName());
-        tv2.setText(dbModel.getEmail());
-        tv3.setText(dbModel.getNumber());
-        tv4.setText(dbModel.getAddress());
+        name.setText(dbModel.getName());
+        number.setText(dbModel.getEmail());
+        email.setText(dbModel.getNumber());
+        address.setText(dbModel.getAddress());
 
 
         Button button = findViewById(R.id.save);
@@ -90,4 +95,19 @@ public class FifthActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int menuId = item.getItemId();
+        if (menuId == android.R.id.home) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
+

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.telephony.PhoneNumberUtils;
 import android.util.Log;
 import android.view.View;
@@ -11,13 +12,18 @@ import android.widget.Button;
 import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
+
     private static final String TAG = MainActivity.class.getSimpleName();
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+
+        toolbar = (Toolbar) findViewById(R.id.toolBar);
+        setSupportActionBar(toolbar);
 
         Button button = findViewById(R.id.submit);
         button.setOnClickListener(new View.OnClickListener() {
@@ -48,6 +54,11 @@ public class MainActivity extends AppCompatActivity {
                 feedDao.insert(Ename, Pnumber, Email, Address);
 
                 startActivity(intent);
+                name.setText("");
+                number.setText("");
+                email.setText("");
+                address.setText("");
+
             }
         });
 

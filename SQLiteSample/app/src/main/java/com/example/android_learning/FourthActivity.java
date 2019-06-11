@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,6 +15,7 @@ public class FourthActivity extends AppCompatActivity {
 
     private static final int ON_DELETE = 1;
     long id;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +30,10 @@ public class FourthActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        toolbar = (Toolbar) findViewById(R.id.toolBar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         DatabaseModel dbModel = new FeedEntryDao().getDetailsById(id);
 
         TextView tv1 = findViewById(R.id.textView);
@@ -61,15 +67,16 @@ public class FourthActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
-        Intent intent = new Intent(FourthActivity.this, FifthActivity.class);
-        Bundle bundle = new Bundle();
-
-
-        bundle.putLong("id", id);
-
-        intent.putExtras(bundle);
-        startActivityForResult(intent, ON_DELETE);
+        int menuId = item.getItemId();
+        if (menuId == R.id.edit) {
+            Intent intent = new Intent(FourthActivity.this, FifthActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putLong("id", id);
+            intent.putExtras(bundle);
+            startActivityForResult(intent, ON_DELETE);
+        } else if (menuId == android.R.id.home) {
+            finish();
+        }
         return super.onOptionsItemSelected(item);
     }
 

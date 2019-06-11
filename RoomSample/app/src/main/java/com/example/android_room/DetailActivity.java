@@ -2,6 +2,7 @@ package com.example.android_room;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.app.Application;
 import android.content.Intent;
@@ -16,11 +17,16 @@ public class DetailActivity extends AppCompatActivity {
     private static final int ON_DELETE = 1;
     long id;
     private UserViewModel muserViewModel = new UserViewModel();
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+
+        toolbar = (Toolbar) findViewById(R.id.toolBar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Bundle bundle = getIntent().getExtras();
         id = bundle.getLong("id");
@@ -59,12 +65,18 @@ public class DetailActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = new Intent(DetailActivity.this, UpdateActivity.class);
-        Bundle bundle = new Bundle();
+        int menuId = item.getItemId();
 
-        bundle.putLong("id", id);
-        intent.putExtras(bundle);
-        startActivityForResult(intent, ON_DELETE);
+        if (menuId == R.id.edit) {
+            Intent intent = new Intent(DetailActivity.this, UpdateActivity.class);
+            Bundle bundle = new Bundle();
+
+            bundle.putLong("id", id);
+            intent.putExtras(bundle);
+            startActivityForResult(intent, ON_DELETE);
+        } else if (menuId == android.R.id.home) {
+            finish();
+        }
         return super.onOptionsItemSelected(item);
     }
 

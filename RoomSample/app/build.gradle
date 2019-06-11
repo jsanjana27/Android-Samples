@@ -29,9 +29,9 @@ dependencies {
 
 
     // Room components
-    implementation "androidx.room:room-runtime:2.1.0-alpha06"
-    annotationProcessor "androidx.room:room-compiler:2.1.0-alpha06"
-    androidTestImplementation "androidx.room:room-testing:2.1.0-alpha06"
+    implementation "androidx.room:room-runtime:2.1.0-rc01"
+    annotationProcessor "androidx.room:room-compiler:2.1.0-rc01"
+    androidTestImplementation "androidx.room:room-testing:2.1.0-rc01"
 
 // Lifecycle components
     implementation "androidx.lifecycle:lifecycle-extensions:2.0.0"

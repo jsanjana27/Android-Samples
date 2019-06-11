@@ -1,22 +1,29 @@
 package com.example.android_room;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 public class NewUserActivity extends AppCompatActivity {
     public static final String EXTRA_REPLY = "com.example.android.userlistsql.REPLY";
-
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_user);
 
+        toolbar = (Toolbar) findViewById(R.id.toolBar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Button button = findViewById(R.id.save);
 
@@ -51,8 +58,28 @@ public class NewUserActivity extends AppCompatActivity {
                 intent.putExtra(EXTRA_REPLY, true);
                 setResult(RESULT_OK, intent);
 
+                name.setText("");
+                number.setText("");
+                email.setText("");
+                address.setText("");
+
+
                 finish();
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int menuId = item.getItemId();
+        if (menuId == android.R.id.home) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
