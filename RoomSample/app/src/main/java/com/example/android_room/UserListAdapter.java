@@ -3,14 +3,21 @@ package com.example.android_room;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.util.List;
 
@@ -26,7 +33,6 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserVi
     }
 
 
-
     @NonNull
     @Override
     public UserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -39,14 +45,21 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserVi
         if (mdbModels != null) {
             DatabaseModel current = mdbModels.get(position);
             holder.userItemView.setText(current.getName());
+            Log.d("URL", "onBindViewHolder: " + current.getPhotoUrl());
+            if (!TextUtils.isEmpty(current.getPhotoUrl())) {
+                RequestOptions cropOptions = new RequestOptions().transform(new CircleCrop());
+
+                Glide.with(holder.itemView.getContext()).load(current.getPhotoUrl()).fallback(R.drawable.ic_action_name).apply(cropOptions).into(holder.imgViewIcon);
+            }
         } else {
             // Covers the case of data not being ready yet.
             holder.userItemView.setText("No Word");
+
         }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context,DetailActivity.class);
+                Intent intent = new Intent(context, DetailActivity.class);
                 Bundle bundle = new Bundle();
 
                 bundle.putLong("id", mdbModels.get(position).getId());
@@ -71,10 +84,13 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserVi
 
     class UserViewHolder extends RecyclerView.ViewHolder {
         private final TextView userItemView;
+        public ImageView imgViewIcon;
 
         private UserViewHolder(View itemView) {
             super(itemView);
             userItemView = itemView.findViewById(R.id.textView);
+            imgViewIcon = (ImageView) itemView.findViewById(R.id.image);
+
         }
     }
 }

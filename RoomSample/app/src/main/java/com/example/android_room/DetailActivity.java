@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.concurrent.ExecutionException;
@@ -49,7 +50,6 @@ public class DetailActivity extends AppCompatActivity {
             tv4.setText("");
             return;
         }
-
 
         tv1.setText(dbModel.getName());
         tv2.setText(dbModel.getEmail());

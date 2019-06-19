@@ -5,6 +5,10 @@ import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.request.RequestOptions;
+
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -93,16 +97,16 @@ public class UserRepository {
 
         @Override
         protected Void doInBackground(final Void... voids) {
-            mDao.deleteAll();
-
-            DatabaseModel dbModel = new DatabaseModel();
-
-            dbModel.setName("Sanjana");
-            dbModel.setNumber("9972405373");
-            dbModel.setEmail("jsanjana96@gmail.com");
-            dbModel.setAddress("Bangalore");
-
-            mDao.insert(dbModel);
+//            mDao.deleteAll();
+//
+//            DatabaseModel dbModel = new DatabaseModel();
+//
+//            dbModel.setName("Sanjana");
+//            dbModel.setNumber("9972405373");
+//            dbModel.setEmail("jsanjana96@gmail.com");
+//            dbModel.setAddress("Bangalore");
+//
+//            mDao.insert(dbModel);
             return null;
         }
     }

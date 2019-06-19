@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 
 
@@ -13,16 +14,25 @@ public class DatabaseModel implements Serializable {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "ID")
     private long id;
-
     @NonNull
-    @ColumnInfo(name="Name")
+    @ColumnInfo(name = "Name")
     private String name;
-    @ColumnInfo(name="Number")
+    @ColumnInfo(name = "Number")
     private String number;
-    @ColumnInfo(name="Email")
+    @ColumnInfo(name = "Email")
     private String email;
-    @ColumnInfo(name="Address")
+    @ColumnInfo(name = "Address")
     private String address;
+    @ColumnInfo(name = "Photo")
+    private String photoUrl;
+
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
+    }
 
     public long getId() {
         return id;
