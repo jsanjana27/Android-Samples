@@ -1,13 +1,12 @@
-package com.example.android_room;
+package com.example.android_room.ui;
 
-import android.app.Application;
-
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.android_room.data.UserRepository;
+import com.example.android_room.data.model.DatabaseModel;
+
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 public class UserViewModel extends ViewModel {
     private UserRepository mRepository;
@@ -21,7 +20,7 @@ public class UserViewModel extends ViewModel {
         mAllUsers = mRepository.getAllDetails();
     }
 
-    LiveData<List<DatabaseModel>> getAllUsers() {
+    public LiveData<List<DatabaseModel>> getAllUsers() {
         return mAllUsers;
     }
 

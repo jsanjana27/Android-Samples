@@ -1,4 +1,4 @@
-package com.example.android_room;
+package com.example.android_room.ui.userupdater;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -6,40 +6,38 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.FileProvider;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
+
+import com.example.android_room.R;
+import com.example.android_room.data.model.DatabaseModel;
+import com.example.android_room.ui.common.BaseActivity;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class NewUserActivity extends AppCompatActivity {
+public class NewUserActivity extends BaseActivity {
     public static final String EXTRA_REPLY = "com.example.android.userlistsql.REPLY";
     static final int REQUEST_TAKE_PHOTO = 1;
     String currentPhotoPath;
-    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_user);
 
-        toolbar = (Toolbar) findViewById(R.id.toolBar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setToolBarAndBackButton();
 
         Button button = findViewById(R.id.save);
 
@@ -54,17 +52,16 @@ public class NewUserActivity extends AppCompatActivity {
                 EditText email = (EditText) findViewById(R.id.email);
                 EditText address = (EditText) findViewById(R.id.address);
 
-
-                String Ename = name.getText().toString();
-                String Pnumber = number.getText().toString();
+                String UserName = name.getText().toString();
+                String PhoneNumber = number.getText().toString();
                 String Email = email.getText().toString();
                 String Address = address.getText().toString();
 
                 DatabaseModel dbModel = new DatabaseModel();
 
                 dbModel.setPhotoUrl(currentPhotoPath);
-                dbModel.setName(Ename);
-                dbModel.setNumber(Pnumber);
+                dbModel.setName(UserName);
+                dbModel.setNumber(PhoneNumber);
                 dbModel.setEmail(Email);
                 dbModel.setAddress(Address);
 
@@ -73,12 +70,10 @@ public class NewUserActivity extends AppCompatActivity {
                 intent.putExtra(EXTRA_REPLY, true);
                 setResult(RESULT_OK, intent);
 
-
                 name.setText("");
                 number.setText("");
                 email.setText("");
                 address.setText("");
-
 
                 finish();
 
@@ -91,14 +86,6 @@ public class NewUserActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int menuId = item.getItemId();
-        if (menuId == android.R.id.home) {
-            finish();
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     public void ChooseImage(View view) {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);

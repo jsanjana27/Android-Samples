@@ -1,33 +1,32 @@
-package com.example.android_room;
+package com.example.android_room.ui.detail;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.concurrent.ExecutionException;
+import com.example.android_room.R;
+import com.example.android_room.ui.common.BaseActivity;
+import com.example.android_room.ui.userupdater.UpdateActivity;
+import com.example.android_room.data.model.DatabaseModel;
+import com.example.android_room.ui.UserViewModel;
 
-public class DetailActivity extends AppCompatActivity {
+public class DetailActivity extends BaseActivity {
     private static final int ON_DELETE = 1;
     long id;
     private UserViewModel muserViewModel = new UserViewModel();
-    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-        toolbar = (Toolbar) findViewById(R.id.toolBar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setToolBarAndBackButton();
 
         Bundle bundle = getIntent().getExtras();
         id = bundle.getLong("id");
@@ -36,25 +35,26 @@ public class DetailActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
         DatabaseModel dbModel = muserViewModel.getDetailsById(id);
 
-        TextView tv1 = findViewById(R.id.textView);
-        TextView tv2 = (TextView) findViewById(R.id.number);
-        TextView tv3 = (TextView) findViewById(R.id.email);
-        TextView tv4 = (TextView) findViewById(R.id.address);
+        TextView nameTextView = findViewById(R.id.textView);
+        TextView numberTextView = (TextView) findViewById(R.id.number);
+        TextView emailTextView = (TextView) findViewById(R.id.email);
+        TextView addressTextView = (TextView) findViewById(R.id.address);
 
         if (dbModel == null) {
-            tv1.setText("");
-            tv2.setText("");
-            tv3.setText("");
-            tv4.setText("");
+            nameTextView.setText("");
+            numberTextView.setText("");
+            emailTextView.setText("");
+            addressTextView.setText("");
             return;
         }
 
-        tv1.setText(dbModel.getName());
-        tv2.setText(dbModel.getEmail());
-        tv3.setText(dbModel.getNumber());
-        tv4.setText(dbModel.getAddress());
+        nameTextView.setText(dbModel.getName());
+        numberTextView.setText(dbModel.getEmail());
+        emailTextView.setText(dbModel.getNumber());
+        addressTextView.setText(dbModel.getAddress());
     }
 
     @Override
@@ -74,8 +74,6 @@ public class DetailActivity extends AppCompatActivity {
             bundle.putLong("id", id);
             intent.putExtras(bundle);
             startActivityForResult(intent, ON_DELETE);
-        } else if (menuId == android.R.id.home) {
-            finish();
         }
         return super.onOptionsItemSelected(item);
     }

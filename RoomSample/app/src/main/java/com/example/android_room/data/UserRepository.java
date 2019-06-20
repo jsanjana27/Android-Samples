@@ -1,28 +1,26 @@
-package com.example.android_room;
+package com.example.android_room.data;
 
-import android.app.Application;
 import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.CircleCrop;
-import com.bumptech.glide.request.RequestOptions;
+import com.example.android_room.data.local.UserRoomDatabase;
+import com.example.android_room.data.local.dao.UserDao;
+import com.example.android_room.data.model.DatabaseModel;
 
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 public class UserRepository {
     private UserDao mUserDao;
     private LiveData<List<DatabaseModel>> mAllUsers;
 
-    UserRepository() {
+    public UserRepository() {
         UserRoomDatabase db = UserRoomDatabase.getInstance();
         mUserDao = db.userDao();
         mAllUsers = mUserDao.getAllDetails();
     }
 
-    LiveData<List<DatabaseModel>> getAllDetails() {
+    public LiveData<List<DatabaseModel>> getAllDetails() {
         return mAllUsers;
     }
 

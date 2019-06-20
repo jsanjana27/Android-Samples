@@ -1,4 +1,4 @@
-package com.example.android_room;
+package com.example.android_room.ui.main;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,6 +18,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.android_room.ui.detail.DetailActivity;
+import com.example.android_room.R;
+import com.example.android_room.data.model.DatabaseModel;
 
 import java.util.List;
 
@@ -31,7 +34,6 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserVi
         mInflater = LayoutInflater.from(context);
         this.context = context;
     }
-
 
     @NonNull
     @Override
@@ -49,7 +51,8 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserVi
             if (!TextUtils.isEmpty(current.getPhotoUrl())) {
                 RequestOptions cropOptions = new RequestOptions().transform(new CircleCrop());
 
-                Glide.with(holder.itemView.getContext()).load(current.getPhotoUrl()).fallback(R.drawable.ic_action_name).apply(cropOptions).into(holder.imgViewIcon);
+                Glide.with(holder.itemView.getContext()).load(current.getPhotoUrl())
+                        .fallback(R.drawable.ic_action_name).apply(cropOptions).into(holder.imgViewIcon);
             }
         } else {
             // Covers the case of data not being ready yet.

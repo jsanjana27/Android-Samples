@@ -1,4 +1,4 @@
-package com.example.android_room;
+package com.example.android_room.ui.main;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,23 +18,27 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.android_room.ui.common.BaseActivity;
+import com.example.android_room.ui.userupdater.NewUserActivity;
+import com.example.android_room.R;
+import com.example.android_room.ui.UserViewModel;
+import com.example.android_room.data.model.DatabaseModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
     public static final int NEW_USER_ACTIVITY_REQUEST_CODE = 1;
     private UserViewModel muserViewModel;
-    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setToolBar();
 
         RecyclerView recyclerView = findViewById(R.id.recyclerview);
         final UserListAdapter adapter = new UserListAdapter(this);

@@ -1,4 +1,4 @@
-package com.example.android_room;
+package com.example.android_room.data.local;
 
 import android.content.Context;
 
@@ -9,13 +9,23 @@ import androidx.room.RoomDatabase;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import com.example.android_room.data.local.dao.UserDao;
+import com.example.android_room.data.model.DatabaseModel;
+
 @Database(entities = DatabaseModel.class, version = 2, exportSchema = false)
 public abstract class UserRoomDatabase extends RoomDatabase {
 
-    private static volatile UserRoomDatabase INSTANCE;
+    static final Migration MIGRATION_1_2 = new Migration(1, 2) {
+        @Override
+        public void migrate(SupportSQLiteDatabase database) {
+            database.execSQL("ALTER TABLE user_table "
+                    + "ADD Photo TEXT");
 
-    private static RoomDatabase.Callback sRoomDatabaseCallback =
-            new RoomDatabase.Callback() {
+        }
+    };
+    private static volatile UserRoomDatabase INSTANCE;
+    private static Callback sRoomDatabaseCallback =
+            new Callback() {
 
                 @Override
                 public void onOpen(@NonNull SupportSQLiteDatabase db) {
@@ -24,7 +34,7 @@ public abstract class UserRoomDatabase extends RoomDatabase {
                 }
             };
 
-    static UserRoomDatabase getDatabase(final Context context) {
+    public static UserRoomDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
             synchronized (UserRoomDatabase.class) {
                 if (INSTANCE == null) {
@@ -39,15 +49,6 @@ public abstract class UserRoomDatabase extends RoomDatabase {
         }
         return INSTANCE;
     }
-
-    static final Migration MIGRATION_1_2 = new Migration(1, 2) {
-        @Override
-        public void migrate(SupportSQLiteDatabase database) {
-            database.execSQL("ALTER TABLE user_table "
-                    +"ADD Photo TEXT");
-
-        }
-    };
 
     public static UserRoomDatabase getInstance() {
         return INSTANCE;
