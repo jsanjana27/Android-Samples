@@ -36,6 +36,7 @@ public class UserRepository {
         return mUserDao.getDetailstById(id);
 
     }
+
     public void updateDetails(DatabaseModel dbModel) {
         mUserDao.update(dbModel);
     }
@@ -57,19 +58,6 @@ public class UserRepository {
             return null;
         }
     }
-
-//    public static class getDetailsById extends AsyncTask<Long, Void, DatabaseModel> {
-//        private UserDao mAsyncTaskDao;
-//
-//        getDetailsById(UserDao userDao) {
-//            mAsyncTaskDao = userDao;
-//        }
-//
-//        @Override
-//        protected DatabaseModel doInBackground(Long... longs) {
-//            return  mAsyncTaskDao.getDetailstById(longs[0]);
-//        }
-//    }
 
     public static class insertAsyncTask extends AsyncTask<DatabaseModel, Void, Void> {
 
