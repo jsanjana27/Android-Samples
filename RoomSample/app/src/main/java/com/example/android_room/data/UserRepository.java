@@ -73,27 +73,4 @@ public class UserRepository {
             return null;
         }
     }
-
-    public static class PopulateDbAsync extends AsyncTask<Void, Void, Void> {
-        public final UserDao mDao;
-
-        PopulateDbAsync(UserRoomDatabase db) {
-            mDao = db.userDao();
-        }
-
-        @Override
-        protected Void doInBackground(final Void... voids) {
-//            mDao.deleteAll();
-//
-//            DatabaseModel dbModel = new DatabaseModel();
-//
-//            dbModel.setName("Sanjana");
-//            dbModel.setNumber("9972405373");
-//            dbModel.setEmail("jsanjana96@gmail.com");
-//            dbModel.setAddress("Bangalore");
-//
-//            mDao.insert(dbModel);
-            return null;
-        }
-    }
 }
