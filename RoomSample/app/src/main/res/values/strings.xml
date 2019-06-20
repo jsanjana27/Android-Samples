@@ -5,4 +5,7 @@
     <string name="hint_word">Users...</string>
     <string name="button_save">Save</string>
     <string name="empty_not_saved">User not saved because it is empty.</string>
+    <string name="confirmation_message">Save Changes?</string>
+    <string name="save">Yes</string>
+    <string name="cancel">No</string>
 </resources>

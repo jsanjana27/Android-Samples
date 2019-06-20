@@ -1,15 +1,19 @@
 package com.example.android_room.ui.userupdater;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android_room.R;
 import com.example.android_room.data.model.DatabaseModel;
@@ -17,7 +21,7 @@ import com.example.android_room.ui.UserViewModel;
 import com.example.android_room.ui.common.BaseActivity;
 
 public class UpdateActivity extends BaseActivity {
-    long id;
+    private long userId;
     private UserViewModel muserViewModel = new UserViewModel();
 
 
@@ -29,9 +33,9 @@ public class UpdateActivity extends BaseActivity {
         setToolBarAndBackButton();
 
         Bundle bundle = getIntent().getExtras();
-        id = bundle.getLong("id");
+        userId = bundle.getLong("id");
 
-        DatabaseModel dbModel = muserViewModel.getDetailsById(id);
+        DatabaseModel dbModel = muserViewModel.getDetailsById(userId);
 
         final EditText name = (EditText) findViewById(R.id.name);
         final EditText number = (EditText) findViewById(R.id.number);
@@ -44,28 +48,51 @@ public class UpdateActivity extends BaseActivity {
         email.setText(dbModel.getNumber());
         address.setText(dbModel.getAddress());
 
+
         Button button = findViewById(R.id.save);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String UserName = name.getText().toString();
+                AlertDialog.Builder builder = new AlertDialog.Builder(UpdateActivity.this);
+                builder.setMessage("Do you want to save changes?")
+                        .setTitle("Save");
 
-                String PhoneNumber = number.getText().toString();
 
-                String Email = email.getText().toString();
+                builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        String UserName = name.getText().toString();
 
-                String Address = address.getText().toString();
+                        String PhoneNumber = number.getText().toString();
 
-                DatabaseModel dbModel = new DatabaseModel();
+                        String Email = email.getText().toString();
 
-                dbModel.setName(UserName);
-                dbModel.setId(id);
-                dbModel.setNumber(PhoneNumber);
-                dbModel.setEmail(Email);
-                dbModel.setAddress(Address);
+                        String Address = address.getText().toString();
 
-                muserViewModel.updateById(dbModel);
-                finish();
+                        DatabaseModel dbModel = new DatabaseModel();
+
+                        dbModel.setName(UserName);
+                        dbModel.setId(userId);
+                        dbModel.setNumber(PhoneNumber);
+                        dbModel.setEmail(Email);
+                        dbModel.setAddress(Address);
+
+                        muserViewModel.updateById(dbModel);
+                        Toast.makeText(UpdateActivity.this, "Updated successfully!", Toast.LENGTH_SHORT).show();
+
+                        finish();
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Toast.makeText(UpdateActivity.this, "Couldn't save", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+// Create the AlertDialog
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
+
             }
         });
 
@@ -73,25 +100,44 @@ public class UpdateActivity extends BaseActivity {
         buttonDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String UserName = name.getText().toString();
+                AlertDialog.Builder builder = new AlertDialog.Builder(UpdateActivity.this);
+                builder.setMessage("Do you want to delete this record?")
+                        .setTitle("Delete");
 
-                String PhoneNumber = number.getText().toString();
+                builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        String UserName = name.getText().toString();
 
-                String Email = email.getText().toString();
+                        String PhoneNumber = number.getText().toString();
 
-                String Address = address.getText().toString();
+                        String Email = email.getText().toString();
 
-                DatabaseModel dbModel = new DatabaseModel();
+                        String Address = address.getText().toString();
 
-                dbModel.setName(UserName);
-                dbModel.setId(id);
-                dbModel.setNumber(PhoneNumber);
-                dbModel.setEmail(Email);
-                dbModel.setAddress(Address);
+                        DatabaseModel dbModel = new DatabaseModel();
 
-                muserViewModel.deleteById(dbModel);
-                setResult(1000);
-                finish();
+                        dbModel.setName(UserName);
+                        dbModel.setId(userId);
+                        dbModel.setNumber(PhoneNumber);
+                        dbModel.setEmail(Email);
+                        dbModel.setAddress(Address);
+
+                        muserViewModel.deleteById(dbModel);
+                        Toast.makeText(UpdateActivity.this, "Deleted successfully!", Toast.LENGTH_SHORT).show();
+                        setResult(1000);
+                        finish();
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Toast.makeText(UpdateActivity.this, "Couldn't delete", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+// Create the AlertDialog
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
             }
         });
     }
@@ -100,6 +146,5 @@ public class UpdateActivity extends BaseActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         return super.onCreateOptionsMenu(menu);
     }
-
 
 }
