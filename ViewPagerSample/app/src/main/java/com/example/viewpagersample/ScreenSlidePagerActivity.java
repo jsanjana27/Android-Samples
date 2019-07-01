@@ -1,23 +1,31 @@
 package com.example.viewpagersample;
 
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
+import android.provider.ContactsContract;
+import android.util.Log;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+
+import static android.Manifest.permission.READ_CONTACTS;
 
 public class ScreenSlidePagerActivity extends AppCompatActivity {
     private static final int NUM_PAGES = 2;
 
+
     private ViewPager mPager;
-
-
-
     private MyPagerAdapter pagerAdapter;
 
     @Override
@@ -28,7 +36,10 @@ public class ScreenSlidePagerActivity extends AppCompatActivity {
         pagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(pagerAdapter);
 
+
         mPager.setPageTransformer(true, new ZoomOutPageTransform());
+
+
     }
 
     @Override
@@ -50,7 +61,7 @@ public class ScreenSlidePagerActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int i) {
-            return new ScreenSlidePageFragment();
+            return new ContactFragment();
         }
 
         @Override
