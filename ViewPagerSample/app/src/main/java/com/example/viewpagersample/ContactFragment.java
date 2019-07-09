@@ -3,8 +3,6 @@ package com.example.viewpagersample;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 
@@ -20,8 +18,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -40,15 +36,7 @@ public class ContactFragment extends Fragment {
     private static final int MY_PERMISSION_READ_CONTACTS = 3;
     ArrayList<MyContacts> contactList = new ArrayList();
     RecyclerView contactRv;
-    long contactId;
     ContactsAdapter adapter;
-
-    String contactKey;
-
-    Uri contactUri;
-
-
-    private SimpleCursorAdapter cursorAdapter;
 
     public ContactFragment() {
     }
