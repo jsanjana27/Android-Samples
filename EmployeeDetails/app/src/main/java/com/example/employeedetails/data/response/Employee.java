@@ -9,9 +9,9 @@ import java.io.Serializable;
 @Entity(tableName = "employee_table")
 public class Employee implements Serializable {
 
-//    @PrimaryKey()
-//    @ColumnInfo(name = "ID")
-//    private long id;
+    @PrimaryKey()
+    @ColumnInfo(name = "ID")
+    private long id;
     @ColumnInfo(name = "Username")
     private String username;
     @ColumnInfo(name = "Password")
@@ -22,6 +22,14 @@ public class Employee implements Serializable {
     private String lastName;
     @ColumnInfo(name = "Token")
     private String token;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getToken() {
         return token;

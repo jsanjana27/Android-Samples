@@ -1,3 +1,21 @@
 <resources>
-    <string name="app_name">Employee-Details</string>
+    <string name="app_name">EmployeeDetails</string>
+    <string name="login_user_name">Username</string>
+    <string name="login_user_password">Password</string>
+    <string name="login_button">Login</string>
+    <string name="login_register">Register?</string>
+    <string name="login_last_name">Last Name</string>
+    <string name="login_first_name">First Name</string>
+    <string name="register_button">Register</string>
+    <string name="login_text">Register</string>
+    <string name="register_text">Register</string>
+    <string name="login_failed">Login failed!</string>
+    <string name="login_successful">Login successful!</string>
+    <string name="registration_successful">Registartion successful!</string>
+    <string name="registration_failed">Registration failed!</string>
+    <string name="title_activity_bottom_naviagtion">BottomNaviagtionActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="preference_file_key">com.example.EmployeeDetails.PREFERENCE_FILE_KEY</string>
 </resources>

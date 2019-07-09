@@ -1,11 +1,13 @@
-package com.example.employeedetails;
+package com.example.employeedetails.ui.main;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.example.employeedetails.R;
+import com.example.employeedetails.ui.common.BaseActivity;
+
+import java.util.HashMap;
 
 public class DashboardActivity extends BaseActivity {
 
@@ -15,6 +17,18 @@ public class DashboardActivity extends BaseActivity {
         setContentView(R.layout.activity_dashboard);
 
         setToolBar();
+
+        Bundle bundle = getIntent().getExtras();
+
+
+        HashMap<String, String> header = new HashMap<>();
+    header.put("Content-Type", "application/json");
+    header.put("authorization", "Bearer " );
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
     }
 
     @Override

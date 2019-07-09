@@ -1,4 +1,7 @@
-package com.example.employeedetails;
+package com.example.employeedetails.data.common;
+
+import com.example.employeedetails.BuildConfig;
+import com.example.employeedetails.util.service.EmployeeService;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;

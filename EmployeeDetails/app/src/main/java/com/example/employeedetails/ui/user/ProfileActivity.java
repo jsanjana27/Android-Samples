@@ -1,8 +1,10 @@
-package com.example.employeedetails;
+package com.example.employeedetails.ui.user;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.employeedetails.R;
 
 public class ProfileActivity extends AppCompatActivity {
 
