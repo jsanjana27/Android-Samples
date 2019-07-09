@@ -55,7 +55,6 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserVi
                         .fallback(R.drawable.ic_action_name).apply(cropOptions).into(holder.imgViewIcon);
             }
         } else {
-            // Covers the case of data not being ready yet.
             holder.userItemView.setText("No Word");
 
         }
