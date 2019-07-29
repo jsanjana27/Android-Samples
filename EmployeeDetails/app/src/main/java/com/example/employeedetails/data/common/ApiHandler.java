@@ -27,7 +27,7 @@ public class ApiHandler {
         Retrofit retrofit = new Retrofit.Builder()
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl("http://172.17.24.157:3000/api/")
+                .baseUrl("http://172.17.24.157:8080/api/")
                 .build();
 
         return retrofit.create(EmployeeService.class);

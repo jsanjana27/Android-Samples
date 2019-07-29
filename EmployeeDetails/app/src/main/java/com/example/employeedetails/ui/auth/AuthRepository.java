@@ -33,7 +33,6 @@ public class AuthRepository {
     private static final String TAG = LoginActivity.class.getSimpleName();
     private EmployeeDao mEmployeeDao;
     private LiveData<List<Employee>> mEmployee;
-    private Context context;
 
     public AuthRepository() {
         EmployeeRoomDatabase db = EmployeeRoomDatabase.getInstance();
@@ -64,7 +63,7 @@ public class AuthRepository {
             e.printStackTrace();
         }
 
-        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; utf-8"),object.toString());
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; utf-8"), object.toString());
 
 
         Call<Employee> call = ApiHandler.getService().employeeLogin(requestBody);
@@ -97,5 +96,36 @@ public class AuthRepository {
         });
 
         return result;
+    }
+
+    public LiveData<Employee> register(Employee employee) {
+        MutableLiveData<Employee> result = new MutableLiveData<Employee>();
+
+        Call<Employee> call = ApiHandler.getService().createEmployee(employee);
+
+        call.enqueue(new Callback<Employee>() {
+            @Override
+            public void onResponse(Call<Employee> call, Response<Employee> response) {
+                if (response.isSuccessful()) {
+                    Log.d("test", "onResponse() called with: call = [" + call + "], response = [" + response + "]");
+                    Employee employee = response.body();
+
+                    SharedPreferences sharedPreferences = App.getApp().getSharedPreferences(App.getApp().getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("username", employee.getUsername());
+                    editor.putString("password", employee.getPassword());
+                    editor.commit();
+                    result.postValue(employee);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Employee> call, Throwable t) {
+                Log.d(TAG, "onFailure() called with: call = [" + call + "], t = [" + t + "]");
+                result.postValue(employee);
+            }
+        });
+        return result;
+
     }
 }

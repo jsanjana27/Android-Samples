@@ -53,6 +53,7 @@ dependencies {
     androidTestImplementation "androidx.room:room-testing:2.1.0"
 
 
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 repositories {
     mavenCentral()

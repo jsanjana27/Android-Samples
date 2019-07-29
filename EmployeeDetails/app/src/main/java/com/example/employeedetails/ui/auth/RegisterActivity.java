@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.lifecycle.Observer;
+
 import com.example.employeedetails.data.common.ApiHandler;
 import com.example.employeedetails.ui.common.BaseActivity;
 import com.example.employeedetails.ui.main.DashboardActivity;
@@ -21,6 +23,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class RegisterActivity extends BaseActivity {
+
+    private AuthViewModel authViewModel = new AuthViewModel();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,40 +55,21 @@ public class RegisterActivity extends BaseActivity {
                 employee.setUsername(userName);
                 employee.setPassword(password);
 
-                Call<Employee> call = ApiHandler.getService().createEmployee(employee);
-                call.enqueue(new Callback<Employee>() {
-                    @Override
-                    public void onResponse(Call<Employee> call, Response<Employee> response) {
-                        if (response.isSuccessful()) {
-                            Log.d("test", "onResponse() called with: call = [" + call + "], response = [" + response + "]");
-                            Employee employee = response.body();
-                            Toast.makeText(
-                                    getApplicationContext(),
-                                    R.string.registration_successful,
-                                    Toast.LENGTH_LONG).show();
+                authViewModel.register(employee);
 
-                            SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-                            SharedPreferences.Editor editor= sharedPreferences.edit();
-                            editor.putString("username", employee.getUsername());
-                            editor.putString("password", employee.getPassword());
-                            editor.commit();
+            }
+        });
 
-                            Intent intent = new Intent(RegisterActivity.this, DashboardActivity.class);
-                            intent.putExtra("response", employee);
-                            startActivity(intent);
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<Employee> call, Throwable t) {
-                        Toast.makeText(
-                                getApplicationContext(),
-                                R.string.registration_failed,
-                                Toast.LENGTH_LONG).show();
-                    }
-                });
-
-
+        authViewModel.registerResponse.observe(RegisterActivity.this, new Observer<Employee>() {
+            @Override
+            public void onChanged(Employee employee) {
+                if(employee == null) {
+                    return;
+                }
+                Intent intent = new Intent(RegisterActivity.this, DashboardActivity.class);
+                Toast.makeText(getApplicationContext(), R.string.registration_successful, Toast.LENGTH_SHORT).show();
+//                    intent.putExtra("response", userName);
+                startActivity(intent);
             }
         });
     }

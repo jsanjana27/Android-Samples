@@ -33,7 +33,7 @@ public class DashboardActivity extends BaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.profile_icon, menu);
+        getMenuInflater().inflate(R.menu.menu_icon, menu);
         return true;
     }
 
@@ -47,5 +47,9 @@ public class DashboardActivity extends BaseActivity {
 //
 //        }
         return super.onOptionsItemSelected(item);
+    }
+
+   public void OrganisationDetails() {
+
     }
 }

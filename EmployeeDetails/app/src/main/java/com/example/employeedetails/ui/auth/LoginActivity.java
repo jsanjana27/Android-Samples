@@ -15,18 +15,6 @@ import com.example.employeedetails.R;
 import com.example.employeedetails.ui.main.DashboardActivity;
 import com.google.android.material.textfield.TextInputEditText;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-
-import javax.annotation.Nullable;
-
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
-import okio.BufferedSink;
-
-
 public class LoginActivity extends BaseActivity {
 
     private static final String TAG = LoginActivity.class.getSimpleName();
@@ -54,28 +42,7 @@ public class LoginActivity extends BaseActivity {
                 final String userName = userNameEt.getText().toString();
                 final String password = passwordEt.getText().toString();
 
-
-
-
-//
-//                RequestBody requestBody = new RequestBody() {
-//                    @Nullable
-//                    @Override
-//                    public MediaType contentType() {
-//                        return null;
-//                    }
-//
-//                    @Override
-//                    public void writeTo(BufferedSink sink) throws IOException {
-//                        try {
-//                            requestBody = object.get("username").toString() + object.get("password").toString();
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                };
-
-                authViewModel.login(userName,password);
+                authViewModel.login(userName, password);
 
             }
         });

@@ -13,8 +13,16 @@ import java.util.List;
 
 public class AuthViewModel extends ViewModel {
 
+    MutableLiveData<String> userName = new MutableLiveData<>();
+    MutableLiveData<String> password = new MutableLiveData<>();
     private AuthRepository authRepository;
+    LiveData<Boolean> loginResponse = Transformations.switchMap(userName, new Function<String, LiveData<Boolean>>() {
+        @Override
+        public LiveData<Boolean> apply(String input) {
 
+            return authRepository.login(userName.getValue(), password.getValue());
+        }
+    });
     private LiveData<List<Employee>> mEmployee;
 
     public AuthViewModel() {
@@ -31,19 +39,20 @@ public class AuthViewModel extends ViewModel {
     }
 
     public void login(String userName, String password) {
-//        authRepository.login(userName, password);
         this.userName.setValue(userName);
         this.password.setValue(password);
     }
 
-    MutableLiveData<String> userName = new MutableLiveData<>();
-    MutableLiveData<String> password = new MutableLiveData<>();
-
-    LiveData<Boolean> loginResponse = Transformations.switchMap(userName, new Function<String, LiveData<Boolean>>() {
+    MutableLiveData<Employee> employee = new MutableLiveData<>();
+    LiveData<Employee> registerResponse = Transformations.switchMap(employee, new Function<Employee, LiveData<Employee>>() {
         @Override
-        public LiveData<Boolean> apply(String input) {
-
-            return authRepository.login(userName.getValue(), password.getValue());
+        public LiveData<Employee> apply(Employee input) {
+            return authRepository.register(input);
         }
     });
+
+    public void register(Employee employee) {
+        this.employee.setValue(employee);
+    }
+
 }
