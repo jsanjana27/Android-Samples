@@ -19,6 +19,6 @@ public class MainActivity extends AppCompatActivity {
         user.put("lastName", "Inc.");
         user.put("age", 17);
 
-//        binding.setUser(user);
+        binding.setUser(user);
     }
 }
