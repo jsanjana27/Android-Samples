@@ -13,12 +13,17 @@
 // limitations under the License.
 package com.example.barcode.barcodescanning;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.barcode.MainActivity;
+import com.example.barcode.OnScanListener;
 import com.example.barcode.common.CameraImageGraphic;
 import com.example.barcode.common.FrameMetadata;
 import com.example.barcode.common.GraphicOverlay;
@@ -38,10 +43,13 @@ import java.util.List;
 public class BarcodeScanningProcessor extends VisionProcessorBase<List<FirebaseVisionBarcode>> {
 
     private static final String TAG = "BarcodeScanProc";
+    private FirebaseVisionBarcode barcode;
 
     private final FirebaseVisionBarcodeDetector detector;
+    private OnScanListener onScanListener = null;
 
-    public BarcodeScanningProcessor() {
+    public BarcodeScanningProcessor(OnScanListener onScanListener) {
+        this.onScanListener = onScanListener;
         // Note that if you know which format of barcode your app is dealing with, detection will be
         // faster to specify the supported barcode formats one by one, e.g.
         // new FirebaseVisionBarcodeDetectorOptions.Builder()
@@ -77,14 +85,22 @@ public class BarcodeScanningProcessor extends VisionProcessorBase<List<FirebaseV
         }
         for (int i = 0; i < barcodes.size(); ++i) {
             FirebaseVisionBarcode barcode = barcodes.get(i);
+            Log.d(TAG, "onSuccess: " + barcode.getRawValue());
+            if(onScanListener != null) {
+                onScanListener.onScan(barcode.getRawValue());
+            }
             BarcodeGraphic barcodeGraphic = new BarcodeGraphic(graphicOverlay, barcode);
             graphicOverlay.add(barcodeGraphic);
         }
+
         graphicOverlay.postInvalidate();
     }
+
 
     @Override
     protected void onFailure(@NonNull Exception e) {
         Log.e(TAG, "Barcode detection failed " + e);
     }
+
+
 }

@@ -19,20 +19,22 @@ import com.example.barcode.barcodescanning.BarcodeScanningProcessor;
 import com.example.barcode.common.CameraSource;
 import com.example.barcode.common.CameraSourcePreview;
 import com.example.barcode.common.GraphicOverlay;
+import com.google.firebase.ml.vision.barcode.FirebaseVisionBarcode;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnScanListener {
     private static final String TAG = "Barcode Scanner";
+    private static final String BARCODE_DETECTION = "Barcode Detection";
+    private static final int PERMISSION_REQUESTS = 1;
     private CameraSource cameraSource = null;
     private GraphicOverlay graphicOverlay;
     private CameraSourcePreview preview;
-    private static final String BARCODE_DETECTION = "Barcode Detection";
     private String selectedModel = BARCODE_DETECTION;
-    private static final int PERMISSION_REQUESTS = 1;
+    private BarcodeScanningProcessor barcodeScanningProcessor = null;
 
     private static boolean isPermissionGranted(Context context, String permission) {
         if (ContextCompat.checkSelfPermission(context, permission)
@@ -149,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
 
                 case BARCODE_DETECTION:
                     Log.i(TAG, "Using Barcode Detector Processor");
-                    cameraSource.setMachineLearningFrameProcessor(new BarcodeScanningProcessor());
+                    cameraSource.setMachineLearningFrameProcessor(new BarcodeScanningProcessor(this));
                     break;
                 default:
                     Log.e(TAG, "Unknown model: " + model);
@@ -176,5 +178,10 @@ public class MainActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(
                     this, allNeededPermissions.toArray(new String[0]), PERMISSION_REQUESTS);
         }
+    }
+
+    @Override
+    public void onScan(String s) {
+        Log.d(TAG, "onScan() called with: s = [" + s + "]");
     }
 }

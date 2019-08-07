@@ -25,22 +25,22 @@
           android:layout_alignParentBottom="true"/>
   </com.example.barcode.common.CameraSourcePreview>
 
-  <TextView android:id="@+id/text"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:paddingLeft="80dp"
-      android:textColor="#FFF"
-      android:textSize="20sp"
-      android:textStyle="bold" />
+  <!--<TextView android:id="@+id/text"-->
+      <!--android:layout_width="match_parent"-->
+      <!--android:layout_height="wrap_content"-->
+      <!--android:paddingLeft="80dp"-->
+      <!--android:textColor="#FFF"-->
+      <!--android:textSize="20sp"-->
+      <!--android:textStyle="bold" />-->
 
-  <FrameLayout
-      android:id="@+id/control"
-      android:layout_width="match_parent"
-      android:layout_height="60dp"
-      android:layout_alignParentBottom="true"
-      android:layout_alignParentStart="true"
-      android:layout_toEndOf="@id/firePreview"
-      android:background="#000">
+  <!--<FrameLayout-->
+      <!--android:id="@+id/control"-->
+      <!--android:layout_width="match_parent"-->
+      <!--android:layout_height="60dp"-->
+      <!--android:layout_alignParentBottom="true"-->
+      <!--android:layout_alignParentStart="true"-->
+      <!--android:layout_toEndOf="@id/firePreview"-->
+      <!--android:background="#000">-->
 
       <!--<Spinner-->
           <!--android:id="@+id/spinner"-->
@@ -57,6 +57,6 @@
           <!--android:textOn=""-->
           <!--android:checked="false" />-->
 
-  </FrameLayout>
+  <!--</FrameLayout>-->
 
 </RelativeLayout>

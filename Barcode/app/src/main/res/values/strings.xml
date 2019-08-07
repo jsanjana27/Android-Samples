@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">Barcode</string>
+    <string name="app_name">Scanner</string>
+    <string name="button_text">SCAN</string>
 </resources>
