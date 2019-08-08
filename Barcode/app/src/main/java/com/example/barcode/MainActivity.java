@@ -6,6 +6,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
@@ -183,5 +184,10 @@ public class MainActivity extends AppCompatActivity implements OnScanListener {
     @Override
     public void onScan(String s) {
         Log.d(TAG, "onScan() called with: s = [" + s + "]");
+        Intent intent = new Intent();
+        intent.setAction("android.intent.action.VIEW");
+        android.net.Uri content_url = android.net.Uri.parse(s);
+        intent.setData(content_url);
+        startActivity(intent);
     }
 }
