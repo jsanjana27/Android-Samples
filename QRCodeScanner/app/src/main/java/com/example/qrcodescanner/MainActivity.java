@@ -17,11 +17,21 @@ import android.widget.Toast;
 import com.google.zxing.Result;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.rmkrishna.permissionX.MPermission;
+import com.rmkrishna.permissionX.MPermissionListener;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
+    String[] PERMISSIONS = {
+            android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            android.Manifest.permission.CAMERA
+    };
     private Button button;
 
     @Override
@@ -29,25 +39,39 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         button = findViewById(R.id.scan);
-        final Activity activity = this;
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                openScanner();
+            }
+        });
+    }
+
+    private void openScanner() {
+        MPermission.askPermissions(this, PERMISSIONS, new MPermissionListener() {
+
+            @Override
+            public void neverAskAgain(@NotNull List<String> permissions) {
+                Toast.makeText(MainActivity.this, getText(R.string.camera_permission_denied), Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void denied(@NotNull List<String> permissions) {
+                Toast.makeText(MainActivity.this, getText(R.string.camera_permission_denied), Toast.LENGTH_LONG).show();
+                // If the user denied the permission(or 's)
+            }
+
+            @Override
+            public void granted() {
                 Intent intent = new Intent(MainActivity.this, ScanActivity.class);
                 startActivityForResult(intent, 300);
+                // If permission(or 's) granted successfully
             }
         });
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-//        if (result != null) {
-//            if (result.getContents() == null) {
-//                Toast.makeText(this, "Scan cancelled!", Toast.LENGTH_LONG).show();
-//                Log.d(TAG, "onActivityResult: " + result);
-//            }
-//        }
         if (requestCode == 300 && resultCode == 1000) {
             TextView textView = findViewById(R.id.data);
             textView.setText(data.getStringExtra("value"));

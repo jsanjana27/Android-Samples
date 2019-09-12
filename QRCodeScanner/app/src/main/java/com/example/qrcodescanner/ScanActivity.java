@@ -18,25 +18,7 @@ import com.google.zxing.Result;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 public class ScanActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler {
-    private static final int MY_CAMERA_REQUEST_CODE = 100;
-    private static final int MY_STORAGE_REQUEST_CODE = 102;
-    int PERMISSION_ALL = 1;
-    String[] PERMISSIONS = {
-            android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            android.Manifest.permission.CAMERA
-    };
     private ZXingScannerView mScannerView;
-
-    public static boolean hasPermissions(Context context, String... permissions) {
-        if (context != null && permissions != null) {
-            for (String permission : permissions) {
-                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,28 +30,9 @@ public class ScanActivity extends AppCompatActivity implements ZXingScannerView.
     @Override
     protected void onResume() {
         super.onResume();
-        if (!hasPermissions(this, PERMISSIONS)) {
-            ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
-        } else {
-            mScannerView.setResultHandler(this);
-            mScannerView.startCamera();
-        }
-    }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case MY_CAMERA_REQUEST_CODE:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    mScannerView.setResultHandler(this); // Register ourselves as a handler for scan results.
-                    mScannerView.startCamera();
-                } else
-                    Toast.makeText(this, getText(R.string.camera_permission_denied), Toast.LENGTH_LONG).show();
-                return;
-            case MY_STORAGE_REQUEST_CODE:
-                return;
-        }
+        mScannerView.setResultHandler(this);
+        mScannerView.startCamera();
     }
 
     @Override
