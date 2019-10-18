@@ -15,7 +15,7 @@ import com.example.android_room.data.model.DatabaseModel;
 @Database(entities = DatabaseModel.class, version = 2, exportSchema = false)
 public abstract class UserRoomDatabase extends RoomDatabase {
 
-    static final Migration MIGRATION_1_2 = new Migration(1, 2) {
+    private static final Migration MIGRATION_1_2 = new Migration(1, 2) {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
             database.execSQL("ALTER TABLE user_table "
@@ -23,6 +23,17 @@ public abstract class UserRoomDatabase extends RoomDatabase {
 
         }
     };
+
+    private static final Migration MIGRATION_2_3 = new Migration(2, 3) {
+        @Override
+        public void migrate(SupportSQLiteDatabase database) {
+            database.execSQL("ALTER TABLE user_table "
+                    + "ADD COLUMN Age INTEGER ");
+            database.execSQL("ALTER TABLE user_table " + " ADD COLUMN Description TEXT ");
+
+        }
+    };
+
     private static volatile UserRoomDatabase INSTANCE;
     private static Callback sRoomDatabaseCallback =
             new Callback() {
@@ -34,7 +45,7 @@ public abstract class UserRoomDatabase extends RoomDatabase {
                 }
             };
 
-    public static UserRoomDatabase getDatabase(final Context context) {
+    public static void getDatabase(final Context context) {
         if (INSTANCE == null) {
             synchronized (UserRoomDatabase.class) {
                 if (INSTANCE == null) {
@@ -42,12 +53,11 @@ public abstract class UserRoomDatabase extends RoomDatabase {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             UserRoomDatabase.class, "user_database")
                             .addCallback(sRoomDatabaseCallback).allowMainThreadQueries()
-                            .addMigrations(MIGRATION_1_2)
+                            .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
                             .build();
                 }
             }
         }
-        return INSTANCE;
     }
 
     public static UserRoomDatabase getInstance() {

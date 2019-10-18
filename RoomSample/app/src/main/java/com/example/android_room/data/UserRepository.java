@@ -12,16 +12,16 @@ import java.util.List;
 
 public class UserRepository {
     private UserDao mUserDao;
-    private LiveData<List<DatabaseModel>> mAllUsers;
+//    private LiveData<List<DatabaseModel>> mAllUsers;
 
     public UserRepository() {
         UserRoomDatabase db = UserRoomDatabase.getInstance();
         mUserDao = db.userDao();
-        mAllUsers = mUserDao.getAllDetails();
+//        mAllUsers = mUserDao.getAllDetails();
     }
 
     public LiveData<List<DatabaseModel>> getAllDetails() {
-        return mAllUsers;
+        return mUserDao.getAllDetails();
     }
 
     public void insert(DatabaseModel dbModel) {
