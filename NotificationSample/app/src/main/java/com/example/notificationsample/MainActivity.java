@@ -5,18 +5,18 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-
-import java.io.InputStream;
 
 public class MainActivity extends AppCompatActivity {
     public static final int notificationId = 1;
     String CHANNEL_ID = "channel";
+    int SUMMARY_ID = 0;
+    String GROUP_NOTIFICATION = "notifications";
     String emails[] = {"carey@gmail.com", "jon@gmail.com", "mary@gmail.com", "justin@gmail.com", "ali@gmail.com"};
     String descriptions[] = {"It's Friday!", "Game tomorrow?", "Friday sale", "How did your week go?", "Vacation at Bali"};
 
@@ -35,25 +35,72 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                createNotificationChannel();
 //                for (int i = 0; i < emails.length; i++) {
-                NotificationCompat.MessagingStyle.Message message1 = new NotificationCompat.MessagingStyle.Message(emails[0], System.currentTimeMillis(), "");
+//                NotificationCompat.MessagingStyle.Message message1 = new NotificationCompat.MessagingStyle.Message(emails[0], System.currentTimeMillis(), "");
 
-                NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this, CHANNEL_ID)
-                        .setSmallIcon(R.drawable.email_icon)
-                        .setContentTitle("Mails")
-                        .setContentText("5 mails")
-                        .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+                Notification newMessageNotification1 =
+                        new NotificationCompat.Builder(MainActivity.this, CHANNEL_ID)
+                                .setSmallIcon(R.drawable.email_icon)
+                                .setContentTitle("Tim")
+                                .setContentText("You will not believe...")
+                                .setGroup(GROUP_NOTIFICATION)
+                                .build();
 
-                NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
+                Notification newMessageNotification2 =
+                        new NotificationCompat.Builder(MainActivity.this, CHANNEL_ID)
+                                .setSmallIcon(R.drawable.email_icon)
+                                .setContentTitle("Tree")
+                                .setContentText("Please join us to celebrate the...")
+                                .setGroup(GROUP_NOTIFICATION)
+                                .build();
+//
+//                NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this, CHANNEL_ID)
+//                        .setSmallIcon(R.drawable.email_icon)
+//                        .setContentTitle("Mails")
+//                        .setContentText("5 mails")
+//                        .setStyle(new NotificationCompat.InboxStyle()
+//                                .addLine("Alex Faarborg  Check this out")
+//                                .addLine("Jeff Chang    Launch Party")
+//                                .setBigContentTitle("2 new messages")
+//                                .setSummaryText("janedoe@example.com"))
+//                        .setGroupSummary(true)
+////                        .setSound()
+//                        .setGroup(GROUP_NOTIFICATION);
+//
+//                NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
 
-                for (int i = 0; i < emails.length; i++) {
-                    inboxStyle.addLine(emails[i] + " : Message " + i);
-                }
+                Notification summaryNotification =
+                        new NotificationCompat.Builder(MainActivity.this, CHANNEL_ID)
+                                .setContentTitle("Hello")
+                                //set content text to support devices running API level < 24
+                                .setContentText("Two new messages")
+                                .setSmallIcon(R.drawable.email_icon)
+                                //build summary info into InboxStyle template
+                                .setStyle(new NotificationCompat.InboxStyle()
+                                        .addLine("Alex Faarborg  Check this out")
+                                        .addLine("Jeff Chang    Launch Party")
+                                        .setBigContentTitle("2 new messages")
+                                        .setSummaryText("janedoe@example.com"))
+                                //specify which group this notification belongs to
+                                .setGroup(GROUP_NOTIFICATION)
+                                //set this notification as the summary for the group
+                                .setGroupSummary(true)
+                                .build();
+//
+//                for (int i = 0; i < emails.length; i++) {
+//                    inboxStyle.addLine(emails[i] + " : Message " + i);
+//                }
 
-                builder.setStyle(inboxStyle);
+//                builder.setStyle(inboxStyle);
+
 //                        .setContentIntent(pendingIntent);
+//                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(MainActivity.this);
+//                notificationManager.notify(notificationId, builder.build());
                 NotificationManagerCompat notificationManager = NotificationManagerCompat.from(MainActivity.this);
-                notificationManager.notify(notificationId, builder.build());
+                notificationManager.notify(10, newMessageNotification1);
+                notificationManager.notify(20, newMessageNotification2);
+                notificationManager.notify(SUMMARY_ID, summaryNotification);
             }
 //            }
         });

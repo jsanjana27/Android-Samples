@@ -1,6 +1,7 @@
 package com.example.barcode;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -10,9 +11,12 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
@@ -184,6 +188,7 @@ public class MainActivity extends AppCompatActivity implements OnScanListener {
     @Override
     public void onScan(String s) {
         Log.d(TAG, "onScan() called with: s = [" + s + "]");
+
         Intent intent = new Intent();
         intent.setAction("android.intent.action.VIEW");
         android.net.Uri content_url = android.net.Uri.parse(s);
