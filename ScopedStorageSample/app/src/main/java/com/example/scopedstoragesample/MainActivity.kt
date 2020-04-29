@@ -52,7 +52,11 @@ class MainActivity : AppCompatActivity() {
                 // User selected the option for never ask again
             }
         }
-        
+
+        browseAlbum.setOnClickListener {
+            val intent = Intent(this, BrowseAlbumActivity::class.java)
+            startActivity(intent)
+        }
         addImageToAlbum.setOnClickListener {
             val bitmap = BitmapFactory.decodeResource(resources, R.drawable.android_logo)
             val displayName = "${System.currentTimeMillis()}.jpg"
