@@ -13,16 +13,12 @@
 // limitations under the License.
 package com.example.barcode.barcodescanning;
 
-import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
-import android.os.Bundle;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.barcode.MainActivity;
 import com.example.barcode.OnScanListener;
 import com.example.barcode.common.CameraImageGraphic;
 import com.example.barcode.common.FrameMetadata;
@@ -86,7 +82,7 @@ public class BarcodeScanningProcessor extends VisionProcessorBase<List<FirebaseV
         for (int i = 0; i < barcodes.size(); ++i) {
             FirebaseVisionBarcode barcode = barcodes.get(i);
             Log.d(TAG, "onSuccess: " + barcode.getRawValue());
-            if(onScanListener != null) {
+            if (onScanListener != null) {
                 onScanListener.onScan(barcode.getRawValue());
             }
             BarcodeGraphic barcodeGraphic = new BarcodeGraphic(graphicOverlay, barcode);

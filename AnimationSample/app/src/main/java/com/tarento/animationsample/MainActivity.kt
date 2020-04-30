@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity(), Animation.AnimationListener {
         //loading Animation
         animation = AnimationUtils.loadAnimation(
             applicationContext,
-            R.anim.clockwise_rotation)
+            R.anim.move_to)
 
         //handling aniamtion on button click
         btn.setOnClickListener {
